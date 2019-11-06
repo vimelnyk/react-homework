@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-export default class App extends React.Component {
+export default class Main extends React.Component {
   state = {
     isOpen: true
   }
