@@ -3,43 +3,43 @@ import Loader from '../loader';
 import './list.scss';
 
 
-export default class FilmList extends  React.Component {
+export default class FilmList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       error: null,
       isLoading: false,
-      items: []
+      items: [],
     };
   }
 
   componentDidMount() {
-       this.setState({
-         isLoading: true,
-       });
-    fetch("https://reactjs-cdp.herokuapp.com/movies")
-      .then(res => res.json())
+    this.setState({
+      isLoading: true,
+    });
+    fetch('https://reactjs-cdp.herokuapp.com/movies')
+      .then((res) => res.json())
       .then(
         (result) => {
           this.setState({
             isLoading: false,
-            items: result.data
+            items: result.data,
           });
-          console.log(result)
+          console.log(result);
         },
         (error) => {
           this.setState({
             isLoaded: false,
-            error: true
+            error: true,
           });
-          console.log(error)
-        }
-      )
+          console.log(error);
+        },
+      );
   }
-  render(){
-    
+
+  render() {
     if (this.state.isLoading) {
-      return <Loader />
+      return <Loader />;
     }
 
     if (this.state.items && this.state.items.length === 0) {
@@ -48,19 +48,17 @@ export default class FilmList extends  React.Component {
     if (this.state.error) {
       return 'Something went wrong((((';
     }
-    return(
-        <div className="film-list row">
-          {this.state.items.map(item => {
-            return (
-              <div className="film-list__item  col-sm-6 col-xl-4"  key={item.id}>
-                <figure className="figure mb-2">
-                    <img src={item.poster_path} className="figure__img" alt={item.title} />
-                    <figcaption className="figure__caption">{item.title}</figcaption>
-                </figure>
-              </div>
-            )
-          })}
-        </div>
-    )
+    return (
+      <div className="film-list row">
+        {this.state.items.map((item) => (
+          <div className="film-list__item  col-sm-6 col-xl-4" key={item.id}>
+            <figure className="figure mb-2">
+              <img src={item.poster_path} className="figure__img" alt={item.title} />
+              <figcaption className="figure__caption">{item.title}</figcaption>
+            </figure>
+          </div>
+        ))}
+      </div>
+    );
   }
 }
