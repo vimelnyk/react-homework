@@ -9,6 +9,12 @@
     "lint": "eslint  ./src ",
     "build": "webpack --mode=production"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint",
+      "pre-push": "npm run lint"
+    }
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -20,7 +26,6 @@
     "babel-jest": "24.9.0",
     "babel-loader": "8.0.6",
     "babel-polyfill": "6.26.0",
-    "bootstrap-4-grid": "3.2.0",
     "css-loader": "3.2.0",
     "eslint": "^6.1.0",
     "eslint-config-airbnb": "^18.0.1",
@@ -44,6 +49,7 @@
     "react": "16.11.0",
     "react-dom": "16.11.0",
     "react-router": "5.1.2",
-    "redux": "4.0.4"
+    "redux": "4.0.4",
+    "bootstrap-4-grid": "3.2.0"
   }
 }
