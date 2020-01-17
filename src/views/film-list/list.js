@@ -7,9 +7,9 @@ export default class FilmList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      error: null,
       isLoading: false,
       items: [],
+      error: null,
     };
   }
 
@@ -24,7 +24,7 @@ export default class FilmList extends React.Component {
           this.setState({
             isLoading: false,
             items: result.data,
-            error: true,
+            error: false,
           });
           console.log(result);
         },
@@ -40,19 +40,19 @@ export default class FilmList extends React.Component {
 
   render() {
     const { isLoading, items, error } = this.state;
-    if ({ isLoading }) {
+    if (isLoading) {
       return <Loader />;
     }
 
-    if ({ items } === 0) {
+    if (items && items.length === 0) {
       return 'Nothing was found';
     }
-    if ({ error }) {
+    if (error) {
       return 'Something went wrong((((';
     }
     return (
       <div className="film-list row">
-        {{ items }.map((item) => (
+        {items.map((item) => (
           <div className="film-list__item  col-sm-6 col-xl-4" key={item.id}>
             <figure className="figure mb-2">
               <img src={item.poster_path} className="figure__img" alt={item.title} />
