@@ -11,6 +11,7 @@ export default class FilmList extends React.Component {
       items: [],
       error: null,
     };
+    this.sortByRelease = this.sortByRelease.bind(this);
   }
 
   componentDidMount() {
@@ -38,6 +39,21 @@ export default class FilmList extends React.Component {
       );
   }
 
+  static renderYear(releaseDate) {
+    if (releaseDate && releaseDate.length) {
+      return releaseDate.substr(0, 4);
+    }
+    return 'N/a';
+  }
+
+
+  static renderGenres(genres) {
+    if (genres && genres.length) {
+      return genres.join(' & ');
+    }
+    return 'N/a';
+  }
+
   render() {
     const { isLoading, items, error } = this.state;
     if (isLoading) {
@@ -51,16 +67,29 @@ export default class FilmList extends React.Component {
       return 'Something went wrong((((';
     }
     return (
-      <div className="film-list row">
-        {items.map((item) => (
-          <div className="film-list__item  col-sm-6 col-xl-4" key={item.id}>
-            <figure className="figure mb-2">
-              <img src={item.poster_path} className="figure__img" alt={item.title} />
-              <figcaption className="figure__caption">{item.title}</figcaption>
-            </figure>
-          </div>
-        ))}
-      </div>
+      <>
+        <div className="row">
+          <button type="button">
+            Sort by release
+          </button>
+        </div>
+        <div className="film-list row">
+          {items.map((item) => (
+            <div className="film-list__item  col-sm-6 col-xl-4" key={item.id}>
+              <figure className="figure mb-2">
+                <img src={item.poster_path} className="figure__img" alt={item.title} />
+                <figcaption className="figure__caption">
+                  {item.title}
+                  <br />
+                  <small>{FilmList.renderYear(item.release_date)}</small>
+                  <br />
+                  <small>{FilmList.renderGenres(item.genres)}</small>
+                </figcaption>
+              </figure>
+            </div>
+          ))}
+        </div>
+      </>
     );
   }
 }
