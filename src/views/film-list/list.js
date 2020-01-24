@@ -10,9 +10,11 @@ export default class FilmList extends React.Component {
       isLoading: false,
       items: [],
       error: null,
+      sortDesc: null,
     };
-    this.sortByRelease = this.sortByRelease.bind(this);
+    this.sortBy.bind(this);
   }
+
 
   componentDidMount() {
     this.setState({
@@ -37,6 +39,23 @@ export default class FilmList extends React.Component {
           console.log(error);
         },
       );
+  }
+
+  sortBy(key) {
+    const { items } = this.state;
+    const { sortDesc } = this.state;
+    console.log(JSON.parse(JSON.stringify(items)));
+    let dataArrRes;
+    if (sortDesc) {
+      dataArrRes = items.sort((a, b) => ((a[key] > b[key]) ? -1 : 1));
+    } else {
+      dataArrRes = items.sort((a, b) => ((a[key] > b[key]) ? 1 : -1));
+    }
+    console.log(dataArrRes);
+    this.setState({
+      items: dataArrRes,
+      sortDesc: !sortDesc,
+    });
   }
 
   static renderYear(releaseDate) {
@@ -69,9 +88,15 @@ export default class FilmList extends React.Component {
     return (
       <>
         <div className="row">
-          <button type="button">
+
+          <button type="button" onClick={() => this.sortBy('release_date')}>
             Sort by release
           </button>
+
+          <button type="button" onClick={() => this.sortBy('vote_average')}>
+            Sort by rating
+          </button>
+
         </div>
         <div className="film-list row">
           {items.map((item) => (
