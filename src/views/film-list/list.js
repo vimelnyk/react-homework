@@ -1,9 +1,17 @@
 import React from 'react';
 import Loader from '../loader';
+import SortButton from '../sort-button';
 import './list.scss';
 
 
 export default class FilmList extends React.Component {
+  static convertDate(key) {
+    if (key === 'release_date') {
+      return Date.parse(key);
+    }
+    return key;
+  }
+
   constructor(props) {
     super(props);
     this.state = {
@@ -44,19 +52,24 @@ export default class FilmList extends React.Component {
   sortBy(key) {
     const { items } = this.state;
     const { sortDesc } = this.state;
+
     console.log(JSON.parse(JSON.stringify(items)));
-    let dataArrRes;
-    if (sortDesc) {
-      dataArrRes = items.sort((a, b) => ((a[key] > b[key]) ? -1 : 1));
-    } else {
-      dataArrRes = items.sort((a, b) => ((a[key] > b[key]) ? 1 : -1));
-    }
+
+    const dataArrRes = items.sort((a, b) => {
+      if (sortDesc) {
+        return (FilmList.convertDate(a[key]) > FilmList.convertDate(b[key])) ? -1 : 1;
+      }
+      return (FilmList.convertDate(a[key]) > FilmList.convertDate(b[key])) ? 1 : -1;
+    });
+
     console.log(dataArrRes);
+
     this.setState({
       items: dataArrRes,
       sortDesc: !sortDesc,
     });
   }
+
 
   static renderYear(releaseDate) {
     if (releaseDate && releaseDate.length) {
@@ -89,14 +102,16 @@ export default class FilmList extends React.Component {
       <>
         <div className="row">
 
-          <button type="button" onClick={() => this.sortBy('release_date')}>
+          {/* <button type="button" onClick={() => this.sortBy('release_date')}>
             Sort by release
           </button>
 
           <button type="button" onClick={() => this.sortBy('vote_average')}>
             Sort by rating
-          </button>
+    </button> */}
 
+          <SortButton label="Sort by release" onPress={() => this.sortBy('release_date')} />
+          <SortButton label="Sort by release" onPress={() => this.sortBy('vote_average')} />
         </div>
         <div className="film-list row">
           {items.map((item) => (
