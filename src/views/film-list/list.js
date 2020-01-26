@@ -101,15 +101,6 @@ export default class FilmList extends React.Component {
     return (
       <>
         <div className="row">
-
-          {/* <button type="button" onClick={() => this.sortBy('release_date')}>
-            Sort by release
-          </button>
-
-          <button type="button" onClick={() => this.sortBy('vote_average')}>
-            Sort by rating
-    </button> */}
-
           <SortButton label="Sort by release" onPress={() => this.sortBy('release_date')} />
           <SortButton label="Sort by release" onPress={() => this.sortBy('vote_average')} />
         </div>
