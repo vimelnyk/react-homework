@@ -88,6 +88,7 @@ export default class FilmList extends React.Component {
 
   render() {
     const { isLoading, items, error } = this.state;
+    const itemsLength = (items.length === 1) ? 'One film found' : `${items.length} movies found`;
     if (isLoading) {
       return <Loader />;
     }
@@ -101,8 +102,16 @@ export default class FilmList extends React.Component {
     return (
       <>
         <div className="row">
-          <SortButton label="Sort by release" onPress={() => this.sortBy('release_date')} />
-          <SortButton label="Sort by release" onPress={() => this.sortBy('vote_average')} />
+          <div>
+            <div>
+              {itemsLength}
+            </div>
+            <div>
+              <span>Sort by </span>
+              <SortButton label="release" onPress={() => this.sortBy('release_date')} />
+              <SortButton label="rating" onPress={() => this.sortBy('vote_average')} />
+            </div>
+          </div>
         </div>
         <div className="film-list row">
           {items.map((item) => (
