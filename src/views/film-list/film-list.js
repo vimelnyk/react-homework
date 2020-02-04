@@ -1,9 +1,18 @@
 import React from 'react';
 import Loader from '../loader';
-import './list.scss';
+import SortButton from '../sort-button';
+import FilmListItem from '../film-list-item';
+import './film-list.scss';
 
 
 export default class FilmList extends React.Component {
+  static convertDate(key) {
+    if (key === 'release_date') {
+      return Date.parse(key);
+    }
+    return key;
+  }
+
   constructor(props) {
     super(props);
     this.state = {
@@ -44,19 +53,20 @@ export default class FilmList extends React.Component {
   sortBy(key) {
     const { items } = this.state;
     const { sortDesc } = this.state;
-    console.log(JSON.parse(JSON.stringify(items)));
-    let dataArrRes;
-    if (sortDesc) {
-      dataArrRes = items.sort((a, b) => ((a[key] > b[key]) ? -1 : 1));
-    } else {
-      dataArrRes = items.sort((a, b) => ((a[key] > b[key]) ? 1 : -1));
-    }
-    console.log(dataArrRes);
+
+    const dataArrRes = items.sort((a, b) => {
+      if (sortDesc) {
+        return (FilmList.convertDate(a[key]) > FilmList.convertDate(b[key])) ? -1 : 1;
+      }
+      return (FilmList.convertDate(a[key]) > FilmList.convertDate(b[key])) ? 1 : -1;
+    });
+
     this.setState({
       items: dataArrRes,
       sortDesc: !sortDesc,
     });
   }
+
 
   static renderYear(releaseDate) {
     if (releaseDate && releaseDate.length) {
@@ -75,6 +85,7 @@ export default class FilmList extends React.Component {
 
   render() {
     const { isLoading, items, error } = this.state;
+    const itemsLength = (items.length === 1) ? 'One film found' : `${items.length} movies found`;
     if (isLoading) {
       return <Loader />;
     }
@@ -88,29 +99,26 @@ export default class FilmList extends React.Component {
     return (
       <>
         <div className="row">
-
-          <button type="button" onClick={() => this.sortBy('release_date')}>
-            Sort by release
-          </button>
-
-          <button type="button" onClick={() => this.sortBy('vote_average')}>
-            Sort by rating
-          </button>
-
+          <div>
+            <div>
+              {itemsLength}
+            </div>
+            <div>
+              <span>Sort by </span>
+              <SortButton label="release" onPress={() => this.sortBy('release_date')} />
+              <SortButton label="rating" onPress={() => this.sortBy('vote_average')} />
+            </div>
+          </div>
         </div>
         <div className="film-list row">
           {items.map((item) => (
             <div className="film-list__item  col-sm-6 col-xl-4" key={item.id}>
-              <figure className="figure mb-2">
-                <img src={item.poster_path} className="figure__img" alt={item.title} />
-                <figcaption className="figure__caption">
-                  {item.title}
-                  <br />
-                  <small>{FilmList.renderYear(item.release_date)}</small>
-                  <br />
-                  <small>{FilmList.renderGenres(item.genres)}</small>
-                </figcaption>
-              </figure>
+              <FilmListItem
+                image={item.poster_path}
+                title={item.title}
+                releaseDate={item.release_date}
+                genres={FilmList.renderGenres(item.genres)}
+              />
             </div>
           ))}
         </div>
