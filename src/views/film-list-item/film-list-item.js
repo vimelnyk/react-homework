@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import renderGenres from '../../utilities/render-genres';
+import renderYear from '../../utilities/render-year';
 import './film-list-item.scss';
+
 
 const FilmListItem = ({
   title, image, releaseDate, genres,
@@ -10,9 +13,9 @@ const FilmListItem = ({
     <figcaption className="figure__caption">
       {title}
       <br />
-      <small>{releaseDate}</small>
+      <small>{renderGenres(releaseDate)}</small>
       <br />
-      <small>{genres}</small>
+      <small>{renderYear(genres)}</small>
     </figcaption>
   </figure>
 );

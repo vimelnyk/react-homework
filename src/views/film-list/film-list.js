@@ -67,22 +67,6 @@ export default class FilmList extends React.Component {
     });
   }
 
-
-  static renderYear(releaseDate) {
-    if (releaseDate && releaseDate.length) {
-      return releaseDate.substr(0, 4);
-    }
-    return 'N/a';
-  }
-
-
-  static renderGenres(genres) {
-    if (genres && genres.length) {
-      return genres.join(' & ');
-    }
-    return 'N/a';
-  }
-
   render() {
     const { isLoading, items, error } = this.state;
     const itemsLength = (items.length === 1) ? 'One film found' : `${items.length} movies found`;
@@ -117,7 +101,7 @@ export default class FilmList extends React.Component {
                 image={item.poster_path}
                 title={item.title}
                 releaseDate={item.release_date}
-                genres={FilmList.renderGenres(item.genres)}
+                genres={item.genres}
               />
             </div>
           ))}
