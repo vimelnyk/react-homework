@@ -13,9 +13,9 @@ const FilmListItem = ({
     <figcaption className="figure__caption">
       {title}
       <br />
-      <small>{renderGenres(releaseDate)}</small>
+      <small>{renderYear(releaseDate)}</small>
       <br />
-      <small>{renderYear(genres)}</small>
+      <small>{renderGenres(genres)}</small>
     </figcaption>
   </figure>
 );
@@ -23,9 +23,8 @@ const FilmListItem = ({
 FilmListItem.propTypes = {
   title: PropTypes.string.isRequired,
   image: PropTypes.string.isRequired,
+  genres: PropTypes.shape([]).isRequired,
   releaseDate: PropTypes.string.isRequired,
-  genres: PropTypes.string.isRequired,
 };
-
 
 export default FilmListItem;
