@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Loader from '../loader';
 import SortButton from '../sort-button';
 import FilmListItem from '../film-list-item';
@@ -16,45 +17,15 @@ export default class FilmList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLoading: false,
-      items: [],
-      error: null,
       sortDesc: null,
     };
-    this.sortBy.bind(this);
-  }
-
-
-  componentDidMount() {
-    this.setState({
-      isLoading: true,
-    });
-    fetch('https://reactjs-cdp.herokuapp.com/movies')
-      .then((res) => res.json())
-      .then(
-        (result) => {
-          this.setState({
-            isLoading: false,
-            items: result.data,
-            error: false,
-          });
-          console.log(result);
-        },
-        (error) => {
-          this.setState({
-            isLoading: false,
-            error: true,
-          });
-          console.log(error);
-        },
-      );
   }
 
   sortBy(key) {
-    const { items } = this.state;
+    const { items } = this.props;
     const { sortDesc } = this.state;
 
-    const dataArrRes = items.sort((a, b) => {
+    items.sort((a, b) => {
       if (sortDesc) {
         return (FilmList.convertDate(a[key]) > FilmList.convertDate(b[key])) ? -1 : 1;
       }
@@ -62,13 +33,13 @@ export default class FilmList extends React.Component {
     });
 
     this.setState({
-      items: dataArrRes,
       sortDesc: !sortDesc,
     });
   }
 
+
   render() {
-    const { isLoading, items, error } = this.state;
+    const { isLoading, items, error } = this.props;
     const itemsLength = (items.length === 1) ? 'One film found' : `${items.length} movies found`;
     if (isLoading) {
       return <Loader />;
@@ -110,3 +81,9 @@ export default class FilmList extends React.Component {
     );
   }
 }
+
+FilmList.propTypes = {
+  isLoading: PropTypes.bool.isRequired,
+  error: PropTypes.bool.isRequired,
+  items: PropTypes.shape([]).isRequired,
+};
