@@ -85,5 +85,5 @@ export default class FilmList extends React.Component {
 FilmList.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   error: PropTypes.bool.isRequired,
-  items: PropTypes.shape([]).isRequired,
+  items: PropTypes.arrayOf(PropTypes.object).isRequired,
 };

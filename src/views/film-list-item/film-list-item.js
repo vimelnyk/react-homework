@@ -25,7 +25,7 @@ const FilmListItem = ({
 FilmListItem.propTypes = {
   title: PropTypes.string.isRequired,
   image: PropTypes.string.isRequired,
-  genres: PropTypes.shape([]).isRequired,
+  genres: PropTypes.arrayOf(PropTypes.string).isRequired,
   releaseDate: PropTypes.string.isRequired,
 };
 
