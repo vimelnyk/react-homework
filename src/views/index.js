@@ -11,6 +11,14 @@ export default class App extends React.Component {
     return items.filter((item) => item.title.toLowerCase().indexOf(term.toLowerCase()) > -1);
   }
 
+  static searchByGenre(items, term) {
+    return items.filter((i) => (
+      i.genres.filter(
+        (item) => item.toLowerCase().indexOf(term.toLowerCase()) > -1,
+      ).length > 0
+    ));
+  }
+
   constructor(props) {
     super(props);
     this.state = {
@@ -39,16 +47,16 @@ export default class App extends React.Component {
           });
           console.log(result);
         },
-        (error) => {
-          this.setState({
-            isLoading: false,
-            items: [],
-            term: '',
-            error: true,
-          });
-          console.log(error);
-        },
-      );
+      )
+      .catch((error) => {
+        this.setState({
+          isLoading: false,
+          items: [],
+          term: '',
+          error: true,
+        });
+        console.log(error);
+      });
   }
 
   onSearchChange(term) {
