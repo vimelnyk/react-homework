@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './search-panel.css';
+import SearchButton from '../search-button';
 
 export default class SearchPanel extends React.Component {
   constructor(props) {
@@ -20,6 +21,13 @@ export default class SearchPanel extends React.Component {
     onSearchChange(term);
   }
 
+  searchBy(e) {
+    const { onSearchSwitch } = this.props;
+    const { value } = e.target;
+    onSearchSwitch(value);
+  }
+
+
   render() {
     const { term } = this.state;
     return (
@@ -34,12 +42,8 @@ export default class SearchPanel extends React.Component {
           />
         </label>
         Search by
-        <button type="button">
-        Title
-        </button>
-        <button type="button">
-        Genre
-        </button>
+        <SearchButton label="Title" value="title" onPress={(e) => this.searchBy(e)} />
+        <SearchButton label="Genre" value="genres" onPress={(e) => this.searchBy(e)} />
       </>
     );
   }
@@ -47,4 +51,5 @@ export default class SearchPanel extends React.Component {
 
 SearchPanel.propTypes = {
   onSearchChange: PropTypes.func.isRequired,
+  onSearchSwitch: PropTypes.func.isRequired,
 };
