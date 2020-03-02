@@ -2,10 +2,18 @@
     margin: 0;
 }
 
-html, body{
+html,
+body {
     height: 100%;
-    font-size: 1.5em;
+    font-size: .8em;
 }
-body{
+
+body {
     font-family: Verdana;
+}
+
+$pink: pink;
+
+.color-pink {
+    color: $pink
 }

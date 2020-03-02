@@ -31,20 +31,22 @@ export default class SearchPanel extends React.Component {
   render() {
     const { term } = this.state;
     return (
-      <>
-        <label htmlFor="search">
-          Search panel
-          <input
-            name="search"
-            placeholder="Search film..."
-            value={term}
-            onChange={(e) => this.onSearchChange(e)}
-          />
-        </label>
-        Search by
-        <SearchButton label="Title" value="title" onPress={(e) => this.searchBy(e)} />
-        <SearchButton label="Genre" value="genres" onPress={(e) => this.searchBy(e)} />
-      </>
+      <div className="container">
+        <div className="row">
+          <label htmlFor="search">
+            Search panel
+            <input
+              name="search"
+              placeholder="Search film..."
+              value={term}
+              onChange={(e) => this.onSearchChange(e)}
+            />
+          </label>
+          Search by
+          <SearchButton label="Title" value="title" onPress={(e) => this.searchBy(e)} />
+          <SearchButton label="Genre" value="genres" onPress={(e) => this.searchBy(e)} />
+        </div>
+      </div>
     );
   }
 }

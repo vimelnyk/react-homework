@@ -53,29 +53,35 @@ export default class FilmList extends React.Component {
     }
     return (
       <>
-        <div className="row">
-          <div>
-            <div>
-              {itemsLength}
-            </div>
-            <div>
-              <span>Sort by </span>
-              <SortButton label="release" onPress={() => this.sortBy('release_date')} />
-              <SortButton label="rating" onPress={() => this.sortBy('vote_average')} />
+        <div className="container">
+          <div className="row">
+            <div className="col-12">
+              <div>
+                <div>
+                  {itemsLength}
+                </div>
+                <div>
+                  <span>Sort by </span>
+                  <SortButton label="release" onPress={() => this.sortBy('release_date')} />
+                  <SortButton label="rating" onPress={() => this.sortBy('vote_average')} />
+                </div>
+              </div>
             </div>
           </div>
         </div>
-        <div className="film-list row">
-          {items.map((item) => (
-            <div className="film-list__item  col-sm-6 col-xl-4" key={item.id}>
-              <FilmListItem
-                image={item.poster_path}
-                title={item.title}
-                releaseDate={item.release_date}
-                genres={item.genres}
-              />
-            </div>
-          ))}
+        <div className="container">
+          <div className="film-list row">
+            {items.map((item) => (
+              <div className="film-list__item  col-sm-6 col-xl-4" key={item.id}>
+                <FilmListItem
+                  image={item.poster_path}
+                  title={item.title}
+                  releaseDate={item.release_date}
+                  genres={item.genres}
+                />
+              </div>
+            ))}
+          </div>
         </div>
       </>
     );

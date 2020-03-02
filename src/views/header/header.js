@@ -1,11 +1,21 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import './header.css';
+import './header.scss';
 
 const Header = ({ label }) => (
-  <header>
-    {label}
+  <header className="header">
+    <div className="container">
+      <div className="row">
+        <div className="col-12">
+          <h1>
+            <a href="/" className="header-logo color-pink">
+              {label}
+            </a>
+          </h1>
+        </div>
+      </div>
+    </div>
   </header>
 );
 Header.propTypes = {

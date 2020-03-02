@@ -97,7 +97,6 @@ export default class App extends React.Component {
           <FilmList isLoading={isLoading} items={visibleItems} error={error} />
         </section>
       </>
-
     );
   }
 }
