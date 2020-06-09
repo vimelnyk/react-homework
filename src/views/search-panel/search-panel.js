@@ -17,7 +17,6 @@ export default class SearchPanel extends React.Component {
     this.setState({
       term,
     });
-    console.log(term);
     onSearchChange(term);
   }
 
