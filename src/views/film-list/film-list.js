@@ -74,6 +74,7 @@ export default class FilmList extends React.Component {
             {items.map((item) => (
               <div className="film-list__item  col-sm-6 col-xl-4" key={item.id}>
                 <FilmListItem
+                  id={item.id}
                   image={item.poster_path}
                   title={item.title}
                   releaseDate={item.release_date}
@@ -83,6 +84,7 @@ export default class FilmList extends React.Component {
             ))}
           </div>
         </div>
+
       </>
     );
   }

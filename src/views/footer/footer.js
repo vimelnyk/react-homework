@@ -1,25 +1,26 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import './header.scss';
-import { Link } from 'react-router-dom';
+import './footer.scss';
 
-const Header = ({ label }) => (
-  <header className="header">
+const Footer = ({ label }) => (
+  <footer className="footer">
     <div className="container">
       <div className="row">
         <div className="col-12">
           <h1>
-            <Link to="/" className="header-logo color-pink">{label}</Link>
+            <a href="/" className="footer-logo color-pink">
+              {label}
+            </a>
           </h1>
         </div>
       </div>
     </div>
-  </header>
+  </footer>
 );
-Header.propTypes = {
+Footer.propTypes = {
   label: PropTypes.string.isRequired,
 };
 
 
-export default Header;
+export default Footer;

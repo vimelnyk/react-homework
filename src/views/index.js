@@ -1,5 +1,10 @@
 import React from 'react';
+import {
+  BrowserRouter as Router, Switch, Route,
+} from 'react-router-dom';
+import PropTypes from 'prop-types';
 import Header from './header';
+import Footer from './footer';
 import FilmList from './film-list';
 import MoviesService from '../services/movies-service';
 import SearchPanel from './search-panel';
@@ -84,19 +89,49 @@ export default class App extends React.Component {
     } = this.state;
     const visibleItems = (searchBy === 'genres') ? App.searchByGenre(items, term) : App.search(items, term);
 
+
     return (
-      <>
-        <section className="intro-section">
-          <Header label="netflixroulette" />
-          <SearchPanel
-            onSearchChange={(e) => this.onSearchChange(e)}
-            onSearchSwitch={(e) => this.onSearchSwitch(e)}
+      <Router>
+        <Switch>
+          <Route exact path="/">
+            <section className="intro-section">
+              <Header label="netflixroulette" />
+              <SearchPanel
+                onSearchChange={(e) => this.onSearchChange(e)}
+                onSearchSwitch={(e) => this.onSearchSwitch(e)}
+              />
+            </section>
+            <section>
+              <FilmList isLoading={isLoading} items={visibleItems} error={error} />
+            </section>
+            <Footer />
+          </Route>
+          <Route
+            path="/film/:id"
+            render={(match) => {
+              console.log(match);
+              console.log(items);
+
+              const { id } = match.match.params;
+              items.id = id;
+              console.log(items);
+
+              return <MyComp id={id} />;
+            }}
           />
-        </section>
-        <section>
-          <FilmList isLoading={isLoading} items={visibleItems} error={error} />
-        </section>
-      </>
+        </Switch>
+      </Router>
     );
   }
 }
+
+const MyComp = ({ id }) => (
+  <h1>
+My Comp
+    { id}
+  </h1>
+);
+
+MyComp.propTypes = {
+  id: PropTypes.number.isRequired,
+};
